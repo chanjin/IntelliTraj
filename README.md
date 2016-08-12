@@ -25,3 +25,7 @@ Trajectory Data Analysis
     - GeoJSON supports the following geometry types: Point, LineString, Polygon, MultiPoint, MultiLineString, and MultiPolygon. Geometric objects with additional properties are Feature objects. Sets of features are contained by FeatureCollection objects.
     - Full Specification: http://geojson.org/geojson-spec.html
     - GeoJSON Format: https://datatracker.ietf.org/doc/rfc7946/
+
+#### 관련 코드
+[Code Snippet](./doc/Code_Snippet.md)
+
