@@ -9,19 +9,15 @@ package advspark_cloudera
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-import scala.collection.mutable.ArrayBuffer
-import scala.reflect.ClassTag
-
-import org.apache.spark.{HashPartitioner, Partitioner, SparkConf, SparkContext}
-import org.apache.spark.SparkContext._
+import com.esri.core.geometry.Point
 import org.apache.spark.rdd.RDD
 import org.apache.spark.util.StatCounter
-
-import com.esri.core.geometry.Point
+import org.apache.spark.{HashPartitioner, Partitioner, SparkConf, SparkContext}
 import org.joda.time.{DateTime, Duration}
 import spray.json._
 
-import com.cloudera.datascience.geotime.GeoJsonProtocol._
+import scala.collection.mutable.ArrayBuffer
+import scala.reflect.ClassTag
 
 case class Trip(
   pickupTime: DateTime,
@@ -88,7 +84,7 @@ object RunGeoTime extends Serializable {
 
     def hasZero(trip: Trip): Boolean = {
       val zero = new Point(0.0, 0.0)
-      (zero.equals(trip.pickupLoc) || zero.equals(trip.dropoffLoc))
+      zero.equals(trip.pickupLoc) || zero.equals(trip.dropoffLoc)
     }
 
     val taxiDone = taxiClean.filter {

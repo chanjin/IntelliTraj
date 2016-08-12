@@ -17,9 +17,6 @@
 
 package common;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -34,6 +31,9 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * NOTE: This is copied over from Mahout. As it's entirely self contained, copying means that we can
