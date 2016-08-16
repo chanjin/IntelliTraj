@@ -12,7 +12,7 @@ class Rect(val x0: Float, val y0: Float, val x1: Float, val y1: Float) {
     x0 <= x && x < x1 && y0 <= y && y < y1
 
   override def toString(): String = {
-    f"($x0%3.3f, $y0%3.3f, $x1%3.3f, $y1%3.3f)"
+    f"($x0%3.5f, $y0%3.5f, $x1%3.5f, $y1%3.5f)"
   }
 }
 

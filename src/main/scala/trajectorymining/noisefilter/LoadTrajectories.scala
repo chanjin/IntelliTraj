@@ -26,12 +26,16 @@ object LoadTrajectories {
     Logger.getLogger("org").setLevel(Level.ERROR)
     val path = "/Users/chanjinpark/data/Geolife Trajectories 1.3/sample/*/Trajectory/*.plt"
     val files = sc.wholeTextFiles(path)
-    val parsed = files.map(parseLine(_))
+    val parsed = files.map(makeTrajectory(_))
 
     parsed.first.pts.take(3).foreach(p => println(p.ts))
   }
 
-  def parseLine(s: (String, String)): Trajectory = {
+  def parseTrajectory(s: String): Array[Point] = {
+    parseTrajectory(s.split("\n"))
+  }
+
+  def makeTrajectory(s: (String, String)): Trajectory = {
     val prefix = "file:/Users/chanjinpark/data/Geolife Trajectories 1.3/sample/"
     val remaining = s._1.substring(prefix.length)
     val userid = remaining.substring(0, remaining.indexOf("/")).toInt
@@ -40,8 +44,10 @@ object LoadTrajectories {
     new Trajectory(userid, sessionid, parseTrajectory(s._2))
   }
 
-  def parseTrajectory(s: String): Array[Point] = {
-    s.split("\n").drop(6).map(s => {
+
+  //
+  def parseTrajectory(ls: Array[String]) : Array[Point] = {
+    ls.drop(6).map(s => {
       val d = s.split(",").map(_.trim)
       //40.004171,  116.321683, 0,  492,  39965.3538425926, 2009-06-01,08:29:32
       val date = d(5).split("-").map(_.toInt)
@@ -52,4 +58,9 @@ object LoadTrajectories {
         new DateTime(date(0), date(1), date(2), time(0), time(1), time(2)))
     })
   }
+
+  def makeTrajectory(uid: String, sid: String, ls: Array[String]): Trajectory = {
+    new Trajectory(uid.toInt, sid, parseTrajectory(ls))
+  }
+
 }
