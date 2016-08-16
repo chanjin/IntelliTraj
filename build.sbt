@@ -9,8 +9,8 @@ scalaVersion := "2.11.8"
 // libraryDependencies +=
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.6.1",
-  "org.apache.spark" %% "spark-mllib" % "1.6.1",
+  "org.apache.spark" %% "spark-core" % "1.6.2",
+  "org.apache.spark" %% "spark-mllib" % "1.6.2",
   "com.github.nscala-time" %% "nscala-time" % "2.12.0",
   "com.esri.geometry" % "esri-geometry-api" % "1.2.1",
   "io.spray" %% "spray-json" % "1.3.2",
