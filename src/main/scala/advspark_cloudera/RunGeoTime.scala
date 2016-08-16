@@ -19,6 +19,8 @@ import spray.json._
 import scala.collection.mutable.ArrayBuffer
 import scala.reflect.ClassTag
 
+import GeoJsonProtocol._
+
 case class Trip(
   pickupTime: DateTime,
   dropoffTime: DateTime,
@@ -30,8 +32,12 @@ object RunGeoTime extends Serializable {
   val formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
 
   def main(args: Array[String]): Unit = {
-    val sc = new SparkContext(new SparkConf().setAppName("GeoTime"))
-    val taxiRaw = sc.textFile("taxidata")
+    val workingDir = "/Users/chanjinpark/GitHub/IntelliTraj/"
+
+    val conf = new SparkConf(true).setMaster("local").setAppName("GeoTime")
+    val sc = new SparkContext(conf)
+
+    val taxiRaw = sc.textFile(workingDir + "data/trip_data_1.csv")
 
     val safeParse = safe(parse)
     val taxiParsed = taxiRaw.map(safeParse)
