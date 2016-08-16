@@ -6,7 +6,6 @@
 package advspark_cloudera
 
 import com.esri.core.geometry.{Geometry, GeometryEngine}
-
 import spray.json._
 
 case class Feature(id: Option[JsValue],
@@ -17,13 +16,13 @@ case class Feature(id: Option[JsValue],
 }
 
 case class FeatureCollection(features: Array[Feature])
-    extends IndexedSeq[Feature] {
+  extends IndexedSeq[Feature] {
   def apply(index: Int) = features(index)
   def length = features.length
 }
 
 case class GeometryCollection(geometries: Array[RichGeometry])
-    extends IndexedSeq[RichGeometry] {
+  extends IndexedSeq[RichGeometry] {
   def apply(index: Int) = geometries(index)
   def length = geometries.length
 }
@@ -33,6 +32,7 @@ object GeoJsonProtocol extends DefaultJsonProtocol {
     def write(g: RichGeometry) = {
       GeometryEngine.geometryToGeoJson(g.spatialReference, g.geometry).parseJson
     }
+
     def read(value: JsValue) = {
       val mg = GeometryEngine.geometryFromGeoJson(value.compactPrint, 0, Geometry.Type.Unknown)
       new RichGeometry(mg.getGeometry, mg.getSpatialReference)
@@ -45,7 +45,9 @@ object GeoJsonProtocol extends DefaultJsonProtocol {
         "type" -> JsString("Feature"),
         "properties" -> JsObject(f.properties),
         "geometry" -> f.geometry.toJson)
-      f.id.foreach(v => { buf += "id" -> v})
+      f.id.foreach(v => {
+        buf += "id" -> v
+      })
       JsObject(buf.toMap)
     }
 
@@ -82,4 +84,5 @@ object GeoJsonProtocol extends DefaultJsonProtocol {
       GeometryCollection(value.asJsObject.fields("geometries").convertTo[Array[RichGeometry]])
     }
   }
+
 }
